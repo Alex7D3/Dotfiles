@@ -10,5 +10,5 @@ cd ./Dotfiles
 ```
 This adds symlinks from within the home folder pointing to the repository folder, so files can be version controlled.
 
-The install script also appends scripts and settings into configuration folders (`~/.bashrc` or `~/.zshrc`).
-The installation is interactive, but all prompts can be skipped by passing `-y` to `install.sh`.
+The install script also appends scripts and settings into configuration files (`~/.bashrc` or `~/.zshrc`).
+The installation is interactive, but all prompts can be accepted by passing `-y` to `install.sh`.
