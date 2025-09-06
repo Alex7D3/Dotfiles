@@ -20,6 +20,7 @@ vim.opt.ignorecase = true
 
 -- Keymaps
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Keep cursor in place while using J" })
 
