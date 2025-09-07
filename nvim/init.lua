@@ -5,7 +5,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.guicursor = ""
 
-vim.g.termguicolors = true
+vim.opt.termguicolors = true
 
 vim.opt.smartindent = true
 vim.opt.shiftwidth = 4
