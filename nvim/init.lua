@@ -17,6 +17,7 @@ vim.opt.incsearch = true
 
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
+vim.o.winborder = 'single'
 
 -- Keymaps
 vim.g.mapleader = " "
@@ -53,6 +54,13 @@ vim.g.netrw_liststyle = 3
 vim.g.netrw_winsize = 14
 vim.keymap.set("n", "-", "<cmd>Ex<CR>", { desc = "Open Netrw" })
 
+vim.filetype.add({
+	extension = {
+		jsx = "javascriptreact",
+		tsx = "typescriptreact",
+	},
+})
+
 -- Language specific settings
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = {
@@ -60,8 +68,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		"typescript",
 		"javascriptreact",
 		"typescriptreact",
-		"typescript.jsx",
-		"javascript.jsx",
 		"html",
 		"css"
 	},
@@ -74,6 +80,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- LSP settings
 vim.lsp.enable {
+	"jdtls",
 	"basedpyright",
 	"rust_analyzer",
 	"clangd",
@@ -84,8 +91,15 @@ vim.lsp.enable {
 	"prolog"
 }
 
+vim.lsp.config("ts_ls", {
+	filetypes = {
+		"javascript", "javascriptreact",
+		"typescript", "typescriptreact",
+	},
+})
+
 local AlexGroup = vim.api.nvim_create_augroup("AlexGroup", { clear = true })
-vim.api.nvim_create_autocmd("LSPAttach", {
+vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",
 	group = AlexGroup,
 
@@ -93,7 +107,7 @@ vim.api.nvim_create_autocmd("LSPAttach", {
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
 		if client ~= nil and client:supports_method("textDocument/completion") then
 			vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
-			vim.opt.completeopt = "menu,menuone,noinsert,noselect"
+			vim.opt.completeopt = "menu,menuone,noselect"
 		end
 
 		local opts = { buffer = event.buf, noremap = true }
@@ -111,7 +125,8 @@ vim.api.nvim_create_autocmd("LSPAttach", {
 		vim.keymap.set("n", "<leader>rr", vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
-		vim.diagnostic.config({ jump = { float = true } })
+		vim.diagnostic.config({ virtual_text = { current_line = true }, underline = true, jump = { float = true } })
+
 		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 		vim.keymap.set("n", "]e", function() vim.diagnostic.jump({ count = 1 }) end, opts)
 		vim.keymap.set("n", "[e", function() vim.diagnostic.jump({ count = -1 }) end, opts)
