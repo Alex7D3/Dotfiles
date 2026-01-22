@@ -11,8 +11,9 @@ return {
 			defaults = {
 				theme = "center",
 				sorting_strategy = "ascending",
+				borderchars = {"─", "│", "─", "│", "┌", "┐", "┘", "└"},
 				layout_config = {
-					horizontal = { preview_width = 0.3 }
+					horizontal = { preview_width = 0.3, }
 				},
 				-- Default configuration for telescope goes here:
 				-- config_key = value,
