@@ -91,13 +91,6 @@ vim.lsp.enable {
 	"prolog"
 }
 
-vim.lsp.config("ts_ls", {
-	filetypes = {
-		"javascript", "javascriptreact",
-		"typescript", "typescriptreact",
-	},
-})
-
 local AlexGroup = vim.api.nvim_create_augroup("AlexGroup", { clear = true })
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",
@@ -105,10 +98,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 	callback = function(event)
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
-		if client ~= nil and client:supports_method("textDocument/completion") then
-			vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
-			vim.opt.completeopt = "menu,menuone,noselect"
-		end
+-- 		if client ~= nil and client:supports_method("textDocument/completion") then
+-- 			vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+-- 			vim.opt.completeopt = "menu,menuone,noselect"
+-- 		end
 
 		local opts = { buffer = event.buf, noremap = true }
 		vim.keymap.set({ "n", "x" }, "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
@@ -124,7 +117,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("n", "<leader>rr", vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
+		vim.keymap.set("i", "<C-x><C-o>", function() require("cmp").complete() end, { silent = true })
 		vim.diagnostic.config({ virtual_text = { current_line = true }, underline = true, jump = { float = true } })
 
 		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)

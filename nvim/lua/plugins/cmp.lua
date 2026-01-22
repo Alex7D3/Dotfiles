@@ -9,36 +9,36 @@ return {
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
 		},
 		config = function()
 			local cmp = require("cmp")
-			local cmp_lsp = require("cmd_nvim_lsp")
 			local luasnip = require("luasnip")
-
-			local capabilities = cmp_lsp.default_capabilities(
-				vim.lsp.protocol.make_client_capabilities()
-			)
 
 			cmp.setup({
 				sources = {
+					{ name = "cmp_buffer" },
+					{ name = "cmp_path" },
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 				},
 				mapping = cmp.mapping.preset.insert({
 					-- Navigate between completion items
-					['<C-p>'] = cmp.mapping.select_prev_item({ behavior = 'select' }),
-					['<C-n>'] = cmp.mapping.select_next_item({ behavior = 'select' }),
+					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
+					["<C-n>"] = cmp.mapping.select_next_item({ behavior = "select" }),
 
 					-- `Enter` key to confirm completion
-					['<CR>'] = cmp.mapping.confirm({ select = false }),
-					['<C-y>'] = cmp.mapping.confirm({ select = true }),
+					["<CR>"] = cmp.mapping.confirm({ select = false }),
+					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 
 					-- Ctrl+Space to trigger completion menu
-					['<C-Space>'] = cmp.mapping.complete(),
+					["<C-Space>"] = cmp.mapping.complete(),
 
 					-- Scroll up and down in the completion documentation
-					['<C-u>'] = cmp.mapping.scroll_docs(-4),
-					['<C-d>'] = cmp.mapping.scroll_docs(4),
+					["<C-u>"] = cmp.mapping.scroll_docs(-4),
+					["<C-d>"] = cmp.mapping.scroll_docs(4),
 				}),
 				-- snippet = {
 				-- 	expand = function(args)
